@@ -532,14 +532,18 @@ public class FlutterBluePlugin implements FlutterPlugin, ActivityAware, MethodCa
 
                 BluetoothGatt gattServer;
                 BluetoothGattCharacteristic characteristic;
-                BluetoothGattDescriptor cccDescriptor;
+                
+                // Skip cccDescriptor authorise
+                // BluetoothGattDescriptor cccDescriptor;
                 try {
                     gattServer = locateGatt(request.getRemoteId());
                     characteristic = locateCharacteristic(gattServer, request.getServiceUuid(), request.getSecondaryServiceUuid(), request.getCharacteristicUuid());
-                    cccDescriptor = characteristic.getDescriptor(CCCD_ID);
-                    if(cccDescriptor == null) {
-                        throw new Exception("could not locate CCCD descriptor for characteristic: " +characteristic.getUuid().toString());
-                    }
+                    
+                    // Skip cccDescriptor authorise
+                    // cccDescriptor = characteristic.getDescriptor(CCCD_ID);
+                    // if(cccDescriptor == null) {
+                    //     throw new Exception("could not locate CCCD descriptor for characteristic: " +characteristic.getUuid().toString());
+                    // }
                 } catch(Exception e) {
                     result.error("set_notification_error", e.getMessage(), null);
                     return;
@@ -569,15 +573,15 @@ public class FlutterBluePlugin implements FlutterPlugin, ActivityAware, MethodCa
                     return;
                 }
 
-                if(!cccDescriptor.setValue(value)) {
-                    result.error("set_notification_error", "error when setting the descriptor value to: " + value, null);
-                    return;
-                }
-
-                if(!gattServer.writeDescriptor(cccDescriptor)) {
-                    result.error("set_notification_error", "error when writing the descriptor", null);
-                    return;
-                }
+                // Skip cccDescriptor authorise
+                // if(!cccDescriptor.setValue(value)) {
+                //     result.error("set_notification_error", "error when setting the descriptor value to: " + value, null);
+                //     return;
+                // }
+                // if(!gattServer.writeDescriptor(cccDescriptor)) {
+                //     result.error("set_notification_error", "error when writing the descriptor", null);
+                //     return;
+                // }
 
                 result.success(null);
                 break;
